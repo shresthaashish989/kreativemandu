@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #1b3864;
+  --color-brand-orange: #f58220;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 50%, #dce1eb 100%);
+  background-size: 300% 300%;
+  animation: gradientShift 10s ease infinite;
+}
