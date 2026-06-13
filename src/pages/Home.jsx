@@ -10,7 +10,7 @@ const scrollToSection = (sectionId) => {
   }
 };
 
-// ---------- Animated Counter with dynamic speed ----------
+// ---------- Animated Counter ----------
 const AnimatedCounter = ({ target, suffix = "", duration = 2000 }) => {
   const [count, setCount] = useState(0);
   const elementRef = useRef(null);
@@ -51,17 +51,17 @@ const AnimatedCounter = ({ target, suffix = "", duration = 2000 }) => {
 
 // ---------- Section Header ----------
 const SectionHeader = ({ subtitle, title, description }) => (
-  <div className="text-center mb-16 animate-fade-in-up">
+  <div className="text-center mb-12 animate-fade-in-up">
     <span className="text-brand-orange font-bold tracking-wider uppercase text-sm mb-2 inline-block border-b-2 border-brand-orange/30 pb-1">{subtitle}</span>
-    <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-blue mt-4 mb-4">{title}</h2>
+    <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-brand-blue mt-4 mb-4 leading-tight">{title}</h2>
     {description && <p className="text-slate-600 max-w-2xl mx-auto">{description}</p>}
   </div>
 );
 
-// ---------- Service Card (enhanced) ----------
+// ---------- Service Card ----------
 const ServiceCard = ({ icon, title, description }) => (
-  <div className="group p-8 bg-white/80 backdrop-blur-sm rounded-2xl hover:bg-brand-blue hover:backdrop-blur-none transition-all duration-500 shadow-md hover:shadow-2xl hover:-translate-y-2 border border-white/30 hover:border-transparent animate-glow-on-hover">
-    <div className="w-14 h-14 bg-brand-blue/10 text-brand-blue rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-white group-hover:text-brand-orange transition-all duration-300">
+  <div className="group p-8 bg-white/80 backdrop-blur-sm rounded-2xl hover:bg-gradient-to-br hover:from-brand-blue hover:to-brand-blue/90 transition-all duration-500 shadow-md hover:shadow-2xl hover:-translate-y-2 border border-white/30 hover:border-transparent animate-glow-on-hover">
+    <div className="w-14 h-14 bg-brand-orange/10 text-brand-orange rounded-xl flex items-center justify-center mb-6 shadow-sm group-hover:bg-white group-hover:text-brand-orange transition-all duration-300">
       {icon}
     </div>
     <h4 className="text-xl font-bold text-brand-blue mb-3 group-hover:text-white transition-colors">{title}</h4>
@@ -69,21 +69,33 @@ const ServiceCard = ({ icon, title, description }) => (
   </div>
 );
 
-// ---------- Portfolio Item (enhanced) ----------
-const PortfolioItem = ({ title, category, image }) => (
+// ---------- Portfolio Item ----------
+const PortfolioItem = ({ title, category, image, live, fullImage = false }) => (
   <div className="group relative overflow-hidden rounded-2xl shadow-xl cursor-pointer">
-    <img src={image} alt={title} className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-700" />
+    <a href={live} target="_blank" rel="noopener noreferrer">
+      <img 
+        src={image} 
+        alt={title} 
+        className={`w-full h-64 transition-transform duration-700 group-hover:scale-110 ${fullImage ? 'object-contain bg-slate-100' : 'object-cover'}`}
+        style={fullImage ? { objectFit: 'contain', backgroundColor: '#f8fafc' } : {}}
+      />
+    </a>
     <div className="absolute inset-0 bg-gradient-to-t from-brand-blue/95 via-brand-blue/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-6">
       <span className="text-brand-orange text-sm font-semibold mb-1">{category}</span>
       <h4 className="text-white text-xl font-bold">{title}</h4>
-      <button onClick={() => scrollToSection('contact')} className="mt-3 text-white text-sm font-medium flex items-center gap-1 group/link hover:opacity-80 transition">
+      <a 
+        href={live} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="mt-3 text-white text-sm font-medium flex items-center gap-1 group/link hover:opacity-80 transition"
+      >
         View Project <span className="group-hover/link:translate-x-1 transition">→</span>
-      </button>
+      </a>
     </div>
   </div>
 );
 
-// ---------- Testimonial Card (enhanced) ----------
+// ---------- Testimonial Card ----------
 const TestimonialCard = ({ quote, name, role, image, rating }) => (
   <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-white/30 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
     <div className="flex gap-1 mb-4">
@@ -104,7 +116,7 @@ const TestimonialCard = ({ quote, name, role, image, rating }) => (
   </div>
 );
 
-// ---------- Team Member (enhanced) ----------
+// ---------- Team Member ----------
 const TeamMember = ({ name, role, image, socials }) => (
   <div className="group text-center">
     <div className="relative overflow-hidden rounded-2xl mb-4 shadow-lg">
@@ -118,7 +130,7 @@ const TeamMember = ({ name, role, image, socials }) => (
       </div>
     </div>
     <h4 className="text-xl font-bold text-brand-blue">{name}</h4>
-    <p className="text-brand-orange">{role}</p>
+    <p className="text-brand-orange font-medium">{role}</p>
   </div>
 );
 
@@ -140,7 +152,7 @@ const FAQItem = ({ question, answer }) => {
   );
 };
 
-// ---------- Blog Card (enhanced) ----------
+// ---------- Blog Card ----------
 const BlogCard = ({ title, excerpt, date, image }) => (
   <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 group hover:-translate-y-2 border border-white/30">
     <img src={image} alt={title} className="w-full h-48 object-cover group-hover:scale-105 transition duration-700" />
@@ -155,20 +167,20 @@ const BlogCard = ({ title, excerpt, date, image }) => (
   </div>
 );
 
-// ---------- Tech Icon (enhanced) ----------
+// ---------- Tech Icon ----------
 const TechIcon = ({ name, icon }) => (
   <div className="flex flex-col items-center group cursor-pointer">
-    <div className="w-24 h-24 bg-white/80 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:bg-brand-blue transition-all duration-500 shadow-md group-hover:shadow-xl group-hover:-translate-y-2 border border-white/30 group-hover:border-transparent">
+    <div className="w-24 h-24 bg-white/80 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-brand-blue group-hover:to-brand-blue/80 transition-all duration-500 shadow-md group-hover:shadow-xl group-hover:-translate-y-2 border border-white/30 group-hover:border-transparent">
       <div className="text-5xl group-hover:text-white transition-all duration-300 group-hover:scale-110">{icon}</div>
     </div>
     <span className="mt-4 text-sm font-bold text-slate-700 group-hover:text-brand-blue transition">{name}</span>
   </div>
 );
 
-// ---------- Process Step (enhanced) ----------
+// ---------- Process Step ----------
 const ProcessStep = ({ number, title, description }) => (
   <div className="relative flex flex-col items-center text-center group">
-    <div className="w-16 h-16 bg-brand-blue/10 rounded-full flex items-center justify-center mb-4 group-hover:bg-brand-blue transition duration-300 backdrop-blur-sm">
+    <div className="w-16 h-16 bg-brand-orange/20 rounded-full flex items-center justify-center mb-4 group-hover:bg-brand-orange transition duration-300 backdrop-blur-sm shadow-md">
       <span className="text-2xl font-extrabold text-brand-orange group-hover:text-white transition">{number}</span>
     </div>
     <h4 className="text-xl font-bold text-brand-blue mb-2">{title}</h4>
@@ -179,7 +191,7 @@ const ProcessStep = ({ number, title, description }) => (
   </div>
 );
 
-// ---------- Dynamic Metrics Card (Live Dashboard) ----------
+// ---------- Metric Card ----------
 const MetricCard = ({ title, value, icon, trend, color }) => (
   <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 group">
     <div className="flex justify-between items-start mb-3">
@@ -193,7 +205,7 @@ const MetricCard = ({ title, value, icon, trend, color }) => (
   </div>
 );
 
-// ---------- Live Activity Feed ----------
+// ---------- Activity Feed ----------
 const ActivityFeed = ({ activities }) => (
   <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40">
     <div className="flex items-center gap-2 mb-4">
@@ -217,7 +229,7 @@ const ActivityFeed = ({ activities }) => (
   </div>
 );
 
-// ---------- Mini Line Chart (Canvas) ----------
+// ---------- Mini Line Chart ----------
 const LiveChart = ({ data }) => {
   const canvasRef = useRef(null);
 
@@ -229,7 +241,6 @@ const LiveChart = ({ data }) => {
     const height = canvas.height;
     ctx.clearRect(0, 0, width, height);
     
-    // Draw grid
     ctx.strokeStyle = '#e2e8f0';
     ctx.lineWidth = 1;
     for (let i = 0; i <= 4; i++) {
@@ -240,7 +251,6 @@ const LiveChart = ({ data }) => {
       ctx.stroke();
     }
     
-    // Draw line
     const maxVal = Math.max(...data, 1);
     const minVal = Math.min(...data, 0);
     const range = maxVal - minVal || 1;
@@ -258,7 +268,6 @@ const LiveChart = ({ data }) => {
     });
     ctx.stroke();
     
-    // Add gradient fill
     const gradient = ctx.createLinearGradient(0, 0, 0, height);
     gradient.addColorStop(0, 'rgba(249, 115, 22, 0.3)');
     gradient.addColorStop(1, 'rgba(249, 115, 22, 0)');
@@ -267,13 +276,11 @@ const LiveChart = ({ data }) => {
     ctx.fillStyle = gradient;
     ctx.fill();
     
-    // Draw points
     points.forEach(point => {
       ctx.beginPath();
       ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
       ctx.fillStyle = '#F97316';
       ctx.fill();
-      ctx.shadowBlur = 0;
     });
   }, [data]);
 
@@ -303,140 +310,208 @@ const ProjectProgress = ({ projects }) => (
   </div>
 );
 
-// ---------- Embedded Chat Widget (fixed side panel, toggleable, enhanced) ----------
-const ChatWidget = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { id: Date.now(), text: "Hello! I'm your AI assistant. How can I help you today?", sender: "bot" },
-  ]);
-  const [input, setInput] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef(null);
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  const getBotReply = (userMsg) => {
-    const msg = userMsg.toLowerCase().trim();
-    if (msg.match(/^(hi|hello|hey)/)) return "Hello! 👋 Welcome to Kreativemandu support. How can I assist?";
-    if (msg.match(/services?/)) return "We offer Web Dev, App Dev, UI/UX, Cybersecurity, Cloud, DevOps. Which interests you?";
-    if (msg.match(/price|cost|quote/)) return "Pricing depends on project scope. Please share your email for a custom quote.";
-    if (msg.match(/contact|support/)) return "Email: contact@kreativemandu.com | Phone: +977 1 1234567 | 24/7 support.";
-    if (msg.match(/portfolio|work/)) return "We've delivered 150+ successful projects. Check our Portfolio page!";
-    if (msg.match(/team|who are you/)) return "We are 12+ experts led by CEO Rajesh Shrestha. All committed to your success.";
-    if (msg.match(/tech|stack/)) return "We master React, Node.js, Python, Laravel, Flutter, AWS, Tailwind, MongoDB, etc.";
-    if (msg.match(/timeline|how long/)) return "Typical website: 4-8 weeks; complex app: 3-6 months.";
-    if (msg.match(/thank/)) return "You're welcome! 😊 Anything else?";
-    return "Thanks for your message. Our team will respond shortly. Ask me about services, pricing, or contact info.";
-  };
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    const userMsg = { id: Date.now(), text: input, sender: "user" };
-    setMessages(prev => [...prev, userMsg]);
-    setInput("");
-    setIsTyping(true);
-    setTimeout(() => {
-      const botMsg = { id: Date.now() + 1, text: getBotReply(input), sender: "bot" };
-      setMessages(prev => [...prev, botMsg]);
-      setIsTyping(false);
-    }, 600);
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSend();
-    }
-  };
-
-  const clearChat = () => {
-    if (window.confirm("Clear chat history?")) {
-      setMessages([{ id: Date.now(), text: "Chat cleared. How can I help you now?", sender: "bot" }]);
-    }
-  };
-
-  const quickReplies = [
-    { label: "Services", query: "What services do you offer?" },
-    { label: "Pricing", query: "How much does a website cost?" },
-    { label: "Contact", query: "Contact information" },
-    { label: "Portfolio", query: "Show me your portfolio" },
+// ---------- SEAMLESS INFINITE VERTICAL CAROUSEL (no gaps, smooth JS-driven) ----------
+const TwoColumnContinuousCarousel = () => {
+  const videos = [
+    { id: 1, client: "KATN Podcast", handle: "@katn.podcast", thumbnail: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?auto=format&fit=crop&w=600&h=1067&q=80", rating: 5, videoUrl: "#" },
+    { id: 2, client: "LilyFiore", handle: "@lilyfiore.official", thumbnail: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&h=1067&q=80", rating: 5, videoUrl: "#" },
+    { id: 3, client: "Kinetic Steps", handle: "@kineticsteps", thumbnail: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=600&h=1067&q=80", rating: 4, videoUrl: "#" },
+    { id: 4, client: "Creative Minds", handle: "@creativeminds", thumbnail: "https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=600&h=1067&q=80", rating: 5, videoUrl: "#" },
+    { id: 5, client: "Tech Talks", handle: "@techtalks", thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&h=1067&q=80", rating: 5, videoUrl: "#" },
+    { id: 6, client: "Vlog Life", handle: "@vloglife", thumbnail: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&h=1067&q=80", rating: 4, videoUrl: "#" },
+    { id: 7, client: "Startup Grind", handle: "@startupgrind", thumbnail: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=600&h=1067&q=80", rating: 5, videoUrl: "#" },
+    { id: 8, client: "Design Weekly", handle: "@designweekly", thumbnail: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=600&h=1067&q=80", rating: 5, videoUrl: "#" },
   ];
 
-  return (
-    <div className="fixed bottom-6 right-6 z-50">
-      {isOpen && (
-        <div className="absolute bottom-16 right-0 w-80 sm:w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col animate-fade-in-up">
-          <div className="bg-gradient-to-r from-brand-blue to-brand-blue/80 text-white p-3 flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="font-semibold">AI Support</span>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={clearChat} className="text-xs bg-white/20 hover:bg-white/30 px-2 py-0.5 rounded-full transition">Clear</button>
-              <button onClick={() => setIsOpen(false)} className="hover:text-brand-orange transition">✕</button>
-            </div>
-          </div>
-          <div className="h-80 overflow-y-auto p-3 space-y-3 bg-gray-50">
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                <div className={`max-w-[80%] rounded-2xl px-3 py-1.5 text-sm ${msg.sender === "user" ? "bg-brand-orange text-white" : "bg-white text-gray-800 border"}`}>
-                  {msg.text}
-                </div>
-              </div>
-            ))}
-            {isTyping && (
-              <div className="flex justify-start">
-                <div className="bg-white rounded-2xl px-3 py-1.5 text-sm border flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce"></span>
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-150"></span>
-                  <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-300"></span>
-                  <span className="ml-1 text-gray-500">typing...</span>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-          {!isTyping && messages.length > 0 && (
-            <div className="px-3 pt-1 pb-0 flex flex-wrap gap-1 border-t border-gray-100 bg-white">
-              {quickReplies.map((reply, idx) => (
-                <button key={idx} onClick={() => { setInput(reply.query); inputRef.current?.focus(); }} className="text-xs bg-gray-100 hover:bg-brand-orange/20 px-2 py-1 rounded-full transition">
-                  {reply.label}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="p-2 border-t bg-white flex gap-2">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type..."
-              rows="1"
-              className="flex-1 p-1.5 border rounded-xl text-sm focus:ring-1 focus:ring-brand-orange resize-none"
-            />
-            <button onClick={handleSend} disabled={isTyping || !input.trim()} className="bg-brand-blue text-white p-1.5 rounded-full hover:bg-brand-orange disabled:opacity-50 w-8 h-8 flex items-center justify-center">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zM12 19v-8" /></svg>
-            </button>
+  // Triple the items for seamless infinite effect
+  const tripledVideos = [...videos, ...videos, ...videos];
+
+  const VideoCard = ({ video }) => (
+    <div className="rounded-xl overflow-hidden shadow-md bg-white border border-gray-100 mb-4">
+      <div className="relative aspect-[9/16] bg-gray-100 group cursor-pointer">
+        <img src={video.thumbnail} alt={video.client} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+          <div className="bg-white/90 rounded-full p-2 shadow-lg transform scale-90 group-hover:scale-100 transition">
+            <svg className="w-5 h-5 text-brand-orange" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
           </div>
         </div>
-      )}
-      {!isOpen && (
-        <button onClick={() => setIsOpen(true)} className="bg-brand-blue text-white p-3 rounded-full shadow-lg hover:bg-brand-orange transition transform hover:scale-110">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-          <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span>
+        <span className="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-1.5 py-0.5 rounded-full">▶ Review</span>
+      </div>
+      <div className="p-3">
+        <div className="flex items-center gap-1 mb-1">
+          <span className="font-bold text-brand-blue text-sm">{video.handle}</span>
+          <span className="text-slate-300 text-xs">•</span>
+          <div className="flex gap-0.5">
+            {[...Array(5)].map((_, i) => (
+              <svg key={i} className={`w-3 h-3 ${i < video.rating ? 'text-yellow-400' : 'text-slate-200'}`} fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+        </div>
+        <h4 className="text-sm font-bold text-brand-blue mb-1">{video.client}</h4>
+        <button className="mt-2 text-xs font-semibold text-brand-orange hover:text-brand-blue transition flex items-center gap-1 group">
+          Watch Review <span className="group-hover:translate-x-1 transition">→</span>
         </button>
-      )}
+      </div>
+    </div>
+  );
+
+  // Smooth infinite scroll using requestAnimationFrame
+  const leftContainerRef = useRef(null);
+  const rightContainerRef = useRef(null);
+  const leftScrollRef = useRef(0);
+  const rightScrollRef = useRef(0);
+  const leftAnimRef = useRef(null);
+  const rightAnimRef = useRef(null);
+
+  useEffect(() => {
+    const animateLeft = () => {
+      if (!leftContainerRef.current) return;
+      leftScrollRef.current += 0.7; // slower speed
+      const maxScroll = leftContainerRef.current.scrollHeight / 2;
+      if (leftScrollRef.current >= maxScroll) {
+        leftScrollRef.current = 0;
+      }
+      leftContainerRef.current.style.transform = `translateY(-${leftScrollRef.current}px)`;
+      leftAnimRef.current = requestAnimationFrame(animateLeft);
+    };
+    const animateRight = () => {
+      if (!rightContainerRef.current) return;
+      rightScrollRef.current += 1.2; // faster speed
+      const maxScroll = rightContainerRef.current.scrollHeight / 2;
+      if (rightScrollRef.current >= maxScroll) {
+        rightScrollRef.current = 0;
+      }
+      rightContainerRef.current.style.transform = `translateY(-${rightScrollRef.current}px)`;
+      rightAnimRef.current = requestAnimationFrame(animateRight);
+    };
+    leftAnimRef.current = requestAnimationFrame(animateLeft);
+    rightAnimRef.current = requestAnimationFrame(animateRight);
+    return () => {
+      if (leftAnimRef.current) cancelAnimationFrame(leftAnimRef.current);
+      if (rightAnimRef.current) cancelAnimationFrame(rightAnimRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="relative w-full max-w-3xl mx-auto">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border border-gray-100">
+        <div className="p-3 border-b border-gray-100 flex justify-between items-center bg-white/90">
+          <div className=" gap-2flex items-center inline-flex">
+           
+            <span className="text-xs font-semibold text-brand-blue ">CLIENT REVIEWS • INFINITE SCROLL</span>
+          </div>
+          
+        </div>
+        <div className="grid grid-cols-2 gap-4 p-4" style={{ height: '560px', overflow: 'hidden' }}>
+          {/* LEFT COLUMN – slower scroll */}
+          <div className="relative overflow-hidden" style={{ height: '100%' }}>
+            <div ref={leftContainerRef} className="flex flex-col" style={{ willChange: 'transform' }}>
+              {tripledVideos.map((video, idx) => <VideoCard key={`left-${video.id}-${idx}`} video={video} />)}
+            </div>
+          </div>
+          {/* RIGHT COLUMN – faster scroll */}
+          <div className="relative overflow-hidden" style={{ height: '100%' }}>
+            <div ref={rightContainerRef} className="flex flex-col" style={{ willChange: 'transform' }}>
+              {tripledVideos.map((video, idx) => <VideoCard key={`right-${video.id}-${idx}`} video={video} />)}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-// ---------- Main Home Component (Enhanced Dashboard Style) ----------
+// ---------- Tawk.to Chat ----------
+const TawkChat = () => {
+  useEffect(() => {
+    if (document.getElementById('tawk-script')) return;
+    const script = document.createElement('script');
+    script.id = 'tawk-script';
+    script.async = true;
+    script.src = 'https://embed.tawk.to/6a2cd39b8705f01c3509b918/1jqvhl6fd';
+    script.charset = 'UTF-8';
+    script.setAttribute('crossorigin', '*');
+    document.body.appendChild(script);
+    return () => {
+      const existingScript = document.getElementById('tawk-script');
+      if (existingScript) existingScript.remove();
+      delete window.Tawk_API;
+      delete window.Tawk_LoadStart;
+    };
+  }, []);
+  return null;
+};
+
+// ---------- NAVBAR COMPONENT ----------
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: 'Home', id: 'home' },
+    { name: 'Services', id: 'services' },
+    { name: 'Portfolio', id: 'portfolio' },
+    { name: 'About', id: 'about' },
+    { name: 'Contact', id: 'contact' }
+  ];
+
+  return (
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg py-3' : 'bg-transparent py-5'}`}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 flex justify-between items-center">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => scrollToSection('home')}>
+          <div className="w-8 h-8 bg-brand-orange rounded-lg flex items-center justify-center">
+            <span className="text-white font-bold text-xl">K</span>
+          </div>
+          <span className="font-dashing-heading text-2xl font-bold text-brand-blue">Kreativemandu</span>
+        </div>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-8">
+          {navLinks.map(link => (
+            <button key={link.id} onClick={() => scrollToSection(link.id)} className="text-slate-700 hover:text-brand-orange font-medium transition-colors">
+              {link.name}
+            </button>
+          ))}
+          <button onClick={() => scrollToSection('contact')} className="bg-brand-orange text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-brand-blue transition shadow-md">
+            Get Started
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden text-brand-blue" onClick={() => setIsOpen(!isOpen)}>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white/95 backdrop-blur-md shadow-lg mt-2 py-4 px-6 flex flex-col gap-4">
+          {navLinks.map(link => (
+            <button key={link.id} onClick={() => { scrollToSection(link.id); setIsOpen(false); }} className="text-slate-700 hover:text-brand-orange font-medium py-2">
+              {link.name}
+            </button>
+          ))}
+          <button onClick={() => { scrollToSection('contact'); setIsOpen(false); }} className="bg-brand-orange text-white text-center py-2 rounded-full font-semibold">
+            Get Started
+          </button>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+// ---------- MAIN HOME COMPONENT (no footer – you can add your own) ----------
 const Home = () => {
-  // Dynamic state for live dashboard
   const [metrics, setMetrics] = useState({
     responseTime: 145,
     activeUsers: 1247,
@@ -445,7 +520,7 @@ const Home = () => {
   });
   const [chartData, setChartData] = useState([65, 72, 88, 95, 82, 78, 90, 85]);
   const [activities, setActivities] = useState([
-    { icon: "🚀", message: "Project 'Fintech Dashboard' deployed successfully", time: "Just now" },
+    { icon: "🚀", message: "Project 'Dental Hospital Website' deployed successfully", time: "Just now" },
     { icon: "💬", message: "New client message received", time: "2 min ago" },
     { icon: "✅", message: "CI/CD pipeline completed", time: "15 min ago" },
   ]);
@@ -455,7 +530,6 @@ const Home = () => {
     { name: "AI Analytics Dashboard", progress: 92 },
   ]);
 
-  // Simulate real-time updates
   useEffect(() => {
     const interval1 = setInterval(() => {
       setMetrics(prev => ({
@@ -465,14 +539,12 @@ const Home = () => {
         dailyRequests: Math.floor(7000 + Math.random() * 2000),
       }));
     }, 5000);
-
     const interval2 = setInterval(() => {
       setChartData(prev => {
         const newData = [...prev.slice(1), Math.floor(60 + Math.random() * 40)];
         return newData;
       });
     }, 4000);
-
     const interval3 = setInterval(() => {
       const newActivity = {
         icon: ["🚀", "💬", "✅", "📊", "🔧"][Math.floor(Math.random() * 5)],
@@ -487,14 +559,12 @@ const Home = () => {
       };
       setActivities(prev => [newActivity, ...prev.slice(0, 4)]);
     }, 8000);
-
     const interval4 = setInterval(() => {
       setProjects(prev => prev.map(p => ({
         ...p,
         progress: Math.min(100, p.progress + Math.floor(Math.random() * 3))
       })));
     }, 10000);
-
     return () => {
       clearInterval(interval1);
       clearInterval(interval2);
@@ -503,7 +573,6 @@ const Home = () => {
     };
   }, []);
 
-  // Static data
   const testimonials = [
     { quote: "Kreativemandu transformed our online presence with their innovative solutions. Highly recommended!", name: "Sarah Johnson", role: "CEO, TechStart", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&h=150&q=80", rating: 5 },
     { quote: "The web application increased our efficiency by 40%. Their team is exceptional!", name: "Michael Chen", role: "Operations Director", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&h=150&q=80", rating: 5 },
@@ -515,12 +584,12 @@ const Home = () => {
   const prevTestimonial = () => setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   const portfolioItems = [
-    { title: "Fintech Dashboard", category: "Web App", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=400&q=80" },
-    { title: "E-commerce Platform", category: "Full Stack", image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=600&h=400&q=80" },
-    { title: "Health & Fitness App", category: "Mobile", image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&h=400&q=80" },
-    { title: "Travel Portal", category: "UI/UX", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&h=400&q=80" },
-    { title: "Real Estate CRM", category: "Web App", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&h=400&q=80" },
-    { title: "AI Analytics Tool", category: "Data Science", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=400&q=80" },
+    { title: "Dental Hospital Website", category: "Web App", image: "/Capture.JPG", live: "https://specialistdentalclinic.com.np", fullImage: true },
+    { title: "E-commerce Platform", category: "Full Stack", image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?auto=format&fit=crop&w=600&h=400&q=80", live: "#" },
+    { title: "Health & Fitness App", category: "Mobile", image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=600&h=400&q=80", live: "#" },
+    { title: "Travel Portal", category: "UI/UX", image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=600&h=400&q=80", live: "#" },
+    { title: "Real Estate CRM", category: "Web App", image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&h=400&q=80", live: "#" },
+    { title: "AI Analytics Tool", category: "Data Science", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=400&q=80", live: "#" },
   ];
 
   const team = [
@@ -559,60 +628,75 @@ const Home = () => {
   };
 
   return (
-    <div className="relative w-full overflow-x-hidden">
-      {/* Custom Animations */}
+    <div className="relative w-full overflow-x-hidden font-dashing">
       <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes glowPulse {
-          0%, 100% { box-shadow: 0 0 5px rgba(249,115,22,0.3); }
-          50% { box-shadow: 0 0 20px rgba(249,115,22,0.6); }
-        }
-        @keyframes slideInLeft {
-          from { opacity: 0; transform: translateX(-50px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes slideInRight {
-          from { opacity: 0; transform: translateX(50px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
-        .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@400;500;600;700&family=Explora&display=swap');
+        :root { --brand-blue: #0A2647; --brand-orange: #FF6B35; --brand-orange-light: #FF8C5A; --brand-accent: #7C3AED; }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, .dashing-heading { font-family: 'Space Grotesk', sans-serif; letter-spacing: -0.02em; }
+        .font-explora { font-family: 'Explora', cursive; }
+        .text-brand-blue { color: var(--brand-blue) !important; }
+        .bg-brand-blue { background-color: var(--brand-blue) !important; }
+        .border-brand-blue { border-color: var(--brand-blue) !important; }
+        .text-brand-orange { color: var(--brand-orange) !important; }
+        .bg-brand-orange { background-color: var(--brand-orange) !important; }
+        .border-brand-orange { border-color: var(--brand-orange) !important; }
+        .from-brand-blue { --tw-gradient-from: var(--brand-blue) !important; }
+        .to-brand-blue { --tw-gradient-to: var(--brand-blue) !important; }
+        .from-brand-orange { --tw-gradient-from: var(--brand-orange) !important; }
+        .to-brand-orange { --tw-gradient-to: var(--brand-orange) !important; }
+        .bg-brand-blue\\/90 { background-color: rgba(10, 38, 71, 0.9) !important; }
+        .bg-brand-blue\\/80 { background-color: rgba(10, 38, 71, 0.8) !important; }
+        .bg-brand-blue\\/10 { background-color: rgba(10, 38, 71, 0.1) !important; }
+        .bg-brand-orange\\/10 { background-color: rgba(255, 107, 53, 0.1) !important; }
+        .bg-brand-orange\\/20 { background-color: rgba(255, 107, 53, 0.2) !important; }
+        .hover\\:bg-brand-orange:hover { background-color: var(--brand-orange) !important; }
+        .hover\\:text-brand-orange:hover { color: var(--brand-orange) !important; }
+        .group:hover .group-hover\\:bg-brand-orange { background-color: var(--brand-orange) !important; }
+        .group:hover .group-hover\\:text-brand-orange { color: var(--brand-orange) !important; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--brand-orange); border-radius: 10px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes glowPulse { 0%, 100% { box-shadow: 0 0 5px rgba(255,107,53,0.3); } 50% { box-shadow: 0 0 20px rgba(255,107,53,0.6); } }
+        @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        .animate-fade-in-up { animation: fadeInUp 0.3s ease-out forwards; }
         .animate-glow-on-hover:hover { animation: glowPulse 1.5s infinite; }
         .animate-slide-in-left { animation: slideInLeft 0.6s ease-out forwards; }
         .animate-slide-in-right { animation: slideInRight 0.6s ease-out forwards; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #F97316; border-radius: 10px; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
         .delay-100 { animation-delay: 0.1s; }
         .delay-200 { animation-delay: 0.2s; }
         .delay-300 { animation-delay: 0.3s; }
       `}</style>
 
-      {/* Animated background */}
       <div className="fixed inset-0 -z-20 bg-gradient-to-br from-slate-50 via-white to-orange-50"></div>
-      <div className="fixed inset-0 -z-10 overflow-hidden opacity-30">
-        <div className="absolute top-20 -left-20 w-96 h-96 bg-brand-orange/20 rounded-full blur-3xl animate-pulse"></div>
+      <div className="fixed inset-0 -z-10 overflow-hidden opacity-40">
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-brand-orange/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 -right-20 w-96 h-96 bg-brand-blue/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-orange/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-40 left-1/4 w-64 h-64 bg-purple-300/20 rounded-full blur-3xl animate-float"></div>
       </div>
 
       <div className="relative z-10">
-        {/* Hero section (enhanced) */}
-        <section id="home" className="relative bg-transparent pt-28 pb-36 overflow-hidden">
+        <Navbar />
+
+        {/* Hero section with continuous two‑column carousel */}
+        <section id="home" className="relative bg-transparent pt-12 pb-20 lg:pb-36 overflow-hidden">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12">
             <div className="flex-1 text-center lg:text-left animate-slide-in-left">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6 border border-white/30">
                 <span className="w-2 h-2 bg-brand-orange rounded-full animate-pulse"></span>
                 <span className="text-sm font-medium text-brand-blue">Innovation Meets Excellence</span>
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-brand-blue leading-tight mb-6">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold text-brand-blue leading-tight mb-6">
                 Transforming Ideas into <br className="hidden lg:block"/>
                 <span className="text-brand-orange relative inline-block">
                   Digital Reality
                   <svg className="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 300 8" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M1 5.5C50 2 150 0 299 5.5" stroke="#F97316" strokeWidth="2" fill="none" strokeLinecap="round"/>
+                    <path d="M1 5.5C50 2 150 0 299 5.5" stroke="#FF6B35" strokeWidth="2" fill="none" strokeLinecap="round"/>
                   </svg>
                 </span>
               </h1>
@@ -627,70 +711,42 @@ const Home = () => {
                   View Our Work <span className="inline-block ml-2 group-hover:translate-x-1 transition">→</span>
                 </button>
               </div>
+              <div className="mt-8 font-explora text-2xl text-brand-orange/70">— Code. Create. Conquer.</div>
             </div>
-            <div className="flex-1 w-full relative animate-slide-in-right">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Team Collaboration" className="w-full h-[400px] object-cover transform group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-brand-blue/20 group-hover:opacity-0 transition-opacity duration-500"></div>
-                <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-lg px-3 py-1 text-sm font-medium text-brand-blue shadow-lg">+12 expert team</div>
-              </div>
+            <div className="flex-1 w-full flex justify-center animate-slide-in-right">
+              <TwoColumnContinuousCarousel />
             </div>
           </div>
         </section>
 
-        {/* Live Dashboard Section (New) */}
+        {/* Live Analytics Dashboard – full‑width activity feed */}
         <section className="py-16 bg-transparent">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <SectionHeader subtitle="Live Analytics" title="Real-Time Performance Dashboard" description="Monitor key metrics and project status in real-time" />
-            <div className="grid lg:grid-cols-3 gap-6 mb-8">
-              <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <MetricCard 
-                  title="Response Time" 
-                  value={`${metrics.responseTime}ms`} 
-                  icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>}
-                  trend={-3}
-                  color="bg-blue-100"
-                />
-                <MetricCard 
-                  title="Active Users" 
-                  value={metrics.activeUsers.toLocaleString()} 
-                  icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>}
-                  trend={12}
-                  color="bg-green-100"
-                />
-                <MetricCard 
-                  title="Server Uptime" 
-                  value={`${metrics.serverUptime}%`} 
-                  icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>}
-                  trend={0.02}
-                  color="bg-purple-100"
-                />
-                <MetricCard 
-                  title="Daily Requests" 
-                  value={metrics.dailyRequests.toLocaleString()} 
-                  icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>}
-                  trend={8}
-                  color="bg-orange-100"
-                />
-              </div>
-              <div>
-                <ActivityFeed activities={activities} />
-              </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <MetricCard title="Response Time" value={`${metrics.responseTime}ms`} icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>} trend={-3} color="bg-blue-100" />
+              <MetricCard title="Active Users" value={metrics.activeUsers.toLocaleString()} icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>} trend={12} color="bg-green-100" />
+              <MetricCard title="Server Uptime" value={`${metrics.serverUptime}%`} icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>} trend={0.02} color="bg-purple-100" />
+              <MetricCard title="Daily Requests" value={metrics.dailyRequests.toLocaleString()} icon={<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>} trend={8} color="bg-orange-100" />
             </div>
+
+            <div className="mb-8">
+              <ActivityFeed activities={activities} />
+            </div>
+
             <div className="grid lg:grid-cols-2 gap-6">
               <div className="bg-white/90 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-white/40">
                 <h3 className="text-lg font-bold text-brand-blue mb-4">Weekly Engagement Trend</h3>
                 <LiveChart data={chartData} />
-                <div className="flex justify-between text-xs text-slate-400 mt-3">
-                  <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-                </div>
+                <div className="flex justify-between text-xs text-slate-400 mt-3"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
               </div>
               <ProjectProgress projects={projects} />
             </div>
           </div>
         </section>
 
-        {/* Stats banner (enhanced) */}
+        {/* Stats banner */}
         <section className="bg-brand-blue/90 backdrop-blur-sm py-16">
           <div className="max-w-7xl mx-auto px-6 lg:px-8">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-white/20">
@@ -714,7 +770,11 @@ const Home = () => {
               <ServiceCard icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>} title="Cloud Solutions" description="Scalable infrastructure & migration to major cloud providers." />
               <ServiceCard icon={<svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>} title="DevOps & Automation" description="CI/CD pipelines, automation, and infrastructure as code." />
             </div>
-            <div className="text-center mt-12"><button onClick={() => scrollToSection('contact')} className="text-brand-orange font-semibold hover:text-brand-blue transition-colors inline-flex items-center gap-2 group">View All Services <span className="group-hover:translate-x-1 transition">→</span></button></div>
+            <div className="text-center mt-12">
+              <button onClick={() => scrollToSection('contact')} className="bg-brand-orange text-white font-semibold hover:bg-brand-blue transition-colors inline-flex items-center gap-2 group px-6 py-3 rounded-full shadow-md">
+                View All Services <span className="group-hover:translate-x-1 transition">→</span>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -821,8 +881,7 @@ const Home = () => {
           </div>
         </section>
 
-        {/* Embedded Chat Widget */}
-        <ChatWidget />
+        <TawkChat />
       </div>
     </div>
   );
